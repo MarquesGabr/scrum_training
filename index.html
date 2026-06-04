@@ -1,0 +1,3402 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code[] Academy · Scrum Framework Training</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --bg-primary: #09090b; /* Zinc 950 */
+      --bg-secondary: #0f0f12; /* Sleek Dark Bento Background */
+      --bg-tertiary: #18181b; /* Zinc 900 Card Level */
+      --border-color: #27272a; /* Zinc 800 */
+      --border-accent: #4f46e5; /* Indigo 600 */
+      --accent-primary: #6366f1; /* Indigo 500 */
+      --accent-secondary: #10b981; /* Emerald 500 */
+      --accent-tertiary: #f59e0b; /* Amber 500 */
+      --text-primary: #d4d4d8; /* Zinc 300 */
+      --text-secondary: #71717a; /* Zinc 500 */
+      --text-light: #f4f4f5; /* Zinc 100 */
+      --transition-base: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 15px;
+      background-color: var(--bg-primary);
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Custom Bento Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 5px;
+      border: 2px solid var(--bg-primary);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-secondary);
+    }
+
+    /* Floating Reading Progress */
+    .progress-bar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      z-index: 1000;
+      background: rgba(9, 9, 11, 0.4);
+      backdrop-filter: blur(4px);
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-primary), #818cf8);
+      transition: width 0.1s ease-out;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.6);
+    }
+
+    /* Mobile Header */
+    .mobile-header {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background-color: rgba(9, 9, 11, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 900;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    /* App Layout - Stunning Float Bento Framework */
+    .app-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      min-height: 100vh;
+      gap: 32px;
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 32px;
+      background-color: var(--bg-primary);
+    }
+
+    /* Sidebar Navigation - Modular Floating Card */
+    .sidebar {
+      position: sticky;
+      top: 32px;
+      height: calc(100vh - 64px);
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 24px;
+      z-index: 950;
+      overflow-y: auto;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brackets {
+      color: var(--accent-primary);
+      text-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+    }
+
+    .academy-badge {
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      font-weight: 800;
+      background-color: rgba(99, 102, 241, 0.1);
+      color: var(--accent-primary);
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .sidebar-subtitle {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    .sidebar-nav {
+      margin: 32px 0;
+      flex-grow: 1;
+    }
+
+    .sidebar-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: var(--transition-base);
+      border: 1px solid transparent;
+      font-family: var(--font-display);
+    }
+
+    .nav-link:hover {
+      background-color: var(--bg-tertiary);
+      color: var(--text-light);
+    }
+
+    .nav-link.active {
+      background-color: rgba(99, 102, 241, 0.1);
+      color: var(--accent-primary);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+    }
+
+    .nav-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-right: 12px;
+      opacity: 0.7;
+    }
+
+    .sidebar-footer {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-color);
+      padding-top: 24px;
+    }
+
+    .sidebar-footer p {
+      margin-bottom: 6px;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* Bento Sections styling - Modular Panels */
+    section {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 2.5rem;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition-base);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    section:hover {
+      border-color: rgba(99, 102, 241, 0.25);
+      box-shadow: 0 12px 40px rgba(9a, 9b, 241, 0.05);
+    }
+
+    section::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, rgba(99, 102, 241, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      transition: var(--transition-base);
+    }
+
+    section:hover::before {
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.07) 0%, rgba(99, 102, 241, 0) 70%);
+    }
+
+    .section-header {
+      margin-bottom: 32px;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-primary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      display: inline-block;
+      background-color: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text-light);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    /* Standard Elements */
+    p {
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+
+    /* Blockquotes - Crafted Highlight box */
+    .scrum-quote {
+      border-left: 4px solid var(--accent-primary);
+      background-color: var(--bg-tertiary);
+      padding: 28px;
+      border-radius: 0 1.5rem 1.5rem 0;
+      margin: 32px 0;
+      position: relative;
+    }
+
+    .scrum-quote p {
+      font-style: italic;
+      color: var(--text-light);
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+
+    .scrum-quote cite {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-primary);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* Cards Grid - Adaptive Bento Boxes */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 32px 0;
+    }
+
+    .card {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 2rem;
+      padding: 32px;
+      transition: var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.1);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--accent-primary);
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      color: var(--text-light);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+      padding: 6px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border-color);
+      width: fit-content;
+    }
+
+    .badge-blue {
+      background-color: rgba(99, 102, 241, 0.1);
+      color: #93c5fd;
+      border-color: rgba(99, 102, 241, 0.25);
+    }
+
+    .badge-green {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: #a7f3d0;
+      border-color: rgba(16, 185, 129, 0.25);
+    }
+
+    .badge-coral {
+      background-color: rgba(245, 158, 11, 0.1);
+      color: #fbcfe8;
+      border-color: rgba(245, 158, 11, 0.25);
+    }
+
+    /* BUTTONS - Aesthetic Retro Modern */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition-base);
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--text-light);
+      color: var(--bg-primary);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-primary:hover {
+      background-color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--border-color);
+      color: var(--text-primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--bg-tertiary);
+      border-color: var(--text-secondary);
+      color: var(--text-light);
+      transform: translateY(-2px);
+    }
+
+    /* === SECTION SPECIFIC STYLING === */
+
+    /* Section 1: Início */
+    .intro-dashboard {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 32px 0;
+    }
+
+    .stat-card {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.5rem;
+      padding: 24px 16px;
+      text-align: center;
+      transition: var(--transition-base);
+    }
+
+    .stat-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);
+    }
+
+    .stat-val {
+      font-family: var(--font-mono);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      text-shadow: 0 0 12px rgba(99, 102, 241, 0.2);
+    }
+
+    .stat-label {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+    }
+
+    .diagram-container {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 2rem;
+      padding: 32px;
+      margin: 32px 0;
+      overflow-x: auto;
+    }
+
+    .cycle-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .scrum-cycle-svg {
+      min-width: 750px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Section 4: Valores do Scrum */
+    .value-card {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.5rem;
+      padding: 28px 32px;
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition-base);
+    }
+
+    .value-card:hover {
+      border-color: var(--accent-primary);
+      background-color: rgba(99, 102, 241, 0.02);
+      transform: translateY(-2px);
+    }
+
+    .value-card.expanded {
+      border-color: var(--accent-primary);
+      background-color: rgba(99, 102, 241, 0.04);
+    }
+
+    .value-card-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .value-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+      background-color: var(--bg-primary);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+
+    .value-title {
+      font-family: var(--font-display);
+      color: var(--text-light);
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .value-card-body p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-top: 12px;
+      margin-bottom: 0;
+    }
+
+    .value-expand-hint {
+      margin-top: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-primary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .value-expand-hint svg {
+      transition: transform 0.25s ease;
+    }
+
+    .value-card.expanded .value-expand-hint svg {
+      transform: rotate(180deg);
+    }
+
+    .value-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .value-card.expanded .value-details {
+      max-height: 250px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .value-details-inner {
+      background-color: var(--bg-primary);
+      border-radius: 1.2rem;
+      padding: 24px;
+      border: 1px solid var(--border-color);
+    }
+
+    .value-details-inner h4 {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--accent-secondary);
+      margin-bottom: 10px;
+    }
+
+    .value-details-inner p {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* Section 5: Time Scrum */
+    .organogram {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 40px auto;
+      max-width: 700px;
+    }
+
+    .sc-node {
+      border: 1px solid var(--border-color);
+      border-radius: 1.5rem;
+      padding: 24px;
+      text-align: center;
+      background-color: var(--bg-tertiary);
+      transition: var(--transition-base);
+    }
+
+    .sc-node:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .sc-node-team-core {
+      border: 1.5px dashed var(--accent-primary);
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, rgba(99, 102, 241, 0) 100%);
+      font-weight: bold;
+      font-size: 1.25rem;
+      font-family: var(--font-mono);
+      color: var(--text-light);
+      letter-spacing: 1px;
+    }
+
+    .sc-roles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .sc-role-card {
+      border-radius: 1.5rem;
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      text-align: center;
+      transition: var(--transition-base);
+    }
+
+    .sc-role-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .sc-role-emoji {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    .sc-role-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text-light);
+    }
+
+    .sc-role-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .time-details-layout {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .role-detail-panel {
+      background-color: var(--bg-tertiary);
+      border-radius: 2rem;
+      border: 1px solid var(--border-color);
+      padding: 32px;
+      transition: var(--transition-base);
+    }
+
+    .role-detail-panel:hover {
+      border-color: rgba(99, 102, 241, 0.15);
+    }
+
+    .role-detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    .role-detail-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .role-section-title {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 20px;
+      margin-bottom: 12px;
+    }
+
+    .role-bullet-list {
+      list-style-position: inside;
+      margin-left: 5px;
+    }
+
+    .role-bullet-list li {
+      color: var(--text-primary);
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    /* Section 6: Eventos Accordion */
+    .accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 32px 0;
+    }
+
+    .accordion-item {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      transition: var(--transition-base);
+    }
+
+    .accordion-item:hover {
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .accordion-item.active {
+      border-color: var(--accent-primary);
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 32px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .accordion-title-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .accordion-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .accordion-arrow {
+      color: var(--text-secondary);
+      transition: transform 0.25s ease;
+    }
+
+    .accordion-item.active .accordion-arrow {
+      transform: rotate(180deg);
+      color: var(--accent-primary);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .accordion-item.active .accordion-content {
+      max-height: 800px;
+    }
+
+    .accordion-content-inner {
+      padding: 0 32px 32px 32px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 24px;
+    }
+
+    .accordion-content-inner p {
+      font-size: 1rem;
+      margin-bottom: 14px;
+    }
+
+    /* Section 7: Artefatos & Compromissos */
+    .artefatos-diagram {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 2rem;
+      padding: 32px;
+      margin: 32px 0;
+    }
+
+    .ad-title {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-primary);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-align: center;
+    }
+
+    .ad-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .ad-row {
+      display: grid;
+      grid-template-columns: 1.2fr 48px 1.5fr;
+      align-items: center;
+    }
+
+    .ad-box {
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      border-radius: 1rem;
+      padding: 20px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      transition: var(--transition-base);
+    }
+
+    .ad-box-primary {
+      color: var(--accent-primary);
+      border-color: rgba(99, 102, 241, 0.2);
+    }
+
+    .ad-box-secondary {
+      color: var(--text-light);
+      border-color: var(--border-color);
+      text-align: left;
+    }
+
+    .ad-arrow {
+      display: flex;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+    }
+
+    /* Section 8: Glossário Search */
+    .search-container {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 2rem;
+      padding: 24px;
+      margin: 32px 0;
+    }
+
+    .search-wrapper {
+      position: relative;
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.2rem;
+      display: flex;
+      align-items: center;
+      padding: 14px 20px;
+    }
+
+    .search-wrapper:focus-within {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.15);
+    }
+
+    .search-icon {
+      color: var(--text-secondary);
+      margin-right: 14px;
+      font-size: 1.1rem;
+    }
+
+    .search-input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 1.05rem;
+      width: 100%;
+    }
+
+    .search-input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .glossary-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .glossary-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.5rem;
+      padding: 24px;
+      transition: var(--transition-base);
+    }
+
+    .glossary-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .glossary-term {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .glossary-def {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .hidden-glossary {
+      display: none !important;
+    }
+
+    /* Section 9: Quiz */
+    .quiz-container {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: 2.5rem;
+      padding: 48px;
+      margin: 32px 0;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .quiz-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .quiz-progression {
+      margin-bottom: 24px;
+    }
+
+    .quiz-progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .quiz-progress-outer {
+      background-color: var(--bg-primary);
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .quiz-progress-inner {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-primary), #818cf8);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .quiz-question-card {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.5rem;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .quiz-question {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      color: var(--text-light);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .quiz-opt {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.2rem;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      color: var(--text-primary);
+      transition: var(--transition-base);
+      user-select: none;
+    }
+
+    .quiz-opt:hover {
+      border-color: var(--accent-primary);
+      background-color: rgba(99, 102, 241, 0.02);
+    }
+
+    .quiz-opt.selected {
+      border-color: var(--accent-primary);
+      background-color: rgba(99, 102, 241, 0.08);
+    }
+
+    .quiz-opt-letter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: var(--text-secondary);
+    }
+
+    .quiz-opt.selected .quiz-opt-letter {
+      background-color: var(--accent-primary);
+      color: #ffffff;
+      border-color: var(--accent-primary);
+    }
+
+    /* Option States after confirm */
+    .quiz-opt.correct {
+      border-color: var(--accent-secondary);
+      background-color: rgba(16, 185, 129, 0.08);
+    }
+    .quiz-opt.correct .quiz-opt-letter {
+      background-color: var(--accent-secondary);
+      color: var(--bg-primary);
+      border-color: var(--accent-secondary);
+    }
+
+    .quiz-opt.incorrect {
+      border-color: var(--accent-tertiary);
+      background-color: rgba(245, 158, 11, 0.08);
+    }
+    .quiz-opt.incorrect .quiz-opt-letter {
+      background-color: var(--accent-tertiary);
+      color: var(--bg-primary);
+      border-color: var(--accent-tertiary);
+    }
+
+    .quiz-feedback {
+      background-color: var(--bg-primary);
+      border-radius: 1.5rem;
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      margin-bottom: 24px;
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .quiz-feedback-status {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feedback-correct {
+      color: var(--accent-secondary);
+    }
+
+    .feedback-incorrect {
+      color: var(--accent-tertiary);
+    }
+
+    .quiz-feedback-text {
+      font-size: 1rem;
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .quiz-feedback-explanation {
+      border-left: 3px solid var(--text-secondary);
+      padding-left: 16px;
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .quiz-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Results layout */
+    .quiz-results-screen {
+      display: none;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .results-score-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid var(--accent-primary);
+      background-color: var(--bg-primary);
+      margin: 24px 0;
+      box-shadow: 0 0 24px rgba(99, 102, 241, 0.2);
+    }
+
+    .results-score-num {
+      font-family: var(--font-mono);
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: var(--text-light);
+    }
+
+    .results-score-total {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .results-level {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+      margin-top: 15px;
+    }
+
+    .results-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-top: 8px;
+      margin-bottom: 32px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Quiz incorrect review list */
+    .review-section {
+      margin-top: 40px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 32px;
+      text-align: left;
+      display: none;
+    }
+
+    .review-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--text-light);
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .review-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .review-item {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.2rem;
+      padding: 24px;
+    }
+
+    .review-q {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .review-ans-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.9rem;
+      font-family: var(--font-mono);
+      margin-bottom: 14px;
+    }
+
+    .review-selected-ans {
+      color: var(--accent-tertiary);
+    }
+
+    .review-correct-ans {
+      color: var(--accent-secondary);
+    }
+
+    .review-expl {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      border-left: 2px solid var(--border-color);
+      padding-left: 14px;
+      line-height: 1.5;
+    }
+
+    /* Back To Top Floating button */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-base);
+      z-index: 800;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--accent-primary);
+      color: #ffffff;
+      border-color: var(--accent-primary);
+      transform: translateY(-4px);
+    }
+
+    /* Sidebar Overlay for Mobile */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(9, 9, 11, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 920;
+    }
+
+    /* Animation rules */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Handle different visual modes (Estudo vs Quiz as separate pages) */
+    body.mode-quiz section:not(#quiz) {
+      display: none !important;
+    }
+    body:not(.mode-quiz) section#quiz {
+      display: none !important;
+    }
+    body.mode-quiz .progress-bar-container {
+      display: none !important;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 1200px) {
+      .app-layout {
+        grid-template-columns: 260px minmax(0, 1fr);
+        padding: 24px;
+        gap: 24px;
+      }
+      .sidebar {
+        top: 24px;
+        height: calc(100vh - 48px);
+        padding: 32px 20px;
+      }
+      section {
+        padding: 32px;
+      }
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1023px) {
+      .app-layout {
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        max-width: 100%;
+        padding: 16px;
+        gap: 16px;
+        overflow-x: hidden;
+      }
+
+      .main-content {
+        padding-top: 64px;
+        width: 100%;
+        min-width: 0;
+      }
+
+      .mobile-header {
+        display: flex;
+        width: 100%;
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 280px;
+        border-radius: 0;
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 930;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+        border: none;
+        border-right: 1px solid var(--border-color);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+    }
+
+    @media (max-width: 768px) {
+      html {
+        font-size: 14px;
+      }
+      .app-layout {
+        padding: 12px;
+        gap: 12px;
+      }
+      section {
+        padding: 24px 20px;
+        border-radius: 1.5rem;
+      }
+      .section-title {
+        font-size: 1.85rem;
+        word-wrap: break-word;
+      }
+      .section-subtitle {
+        font-size: 0.95rem;
+      }
+      .card-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+      }
+      .card {
+        padding: 24px;
+        border-radius: 1.25rem;
+      }
+      .intro-dashboard {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .stat-card {
+        padding: 16px 8px;
+        border-radius: 1rem;
+      }
+      .stat-val {
+        font-size: 1.65rem;
+      }
+      .stat-label {
+        font-size: 0.75rem;
+      }
+      .sc-roles-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+      }
+      .sc-role-card {
+        padding: 18px;
+        border-radius: 1.25rem;
+      }
+      .value-card {
+        padding: 20px;
+        border-radius: 1.25rem;
+      }
+      .diagram-container {
+        padding: 18px 12px;
+        border-radius: 1.25rem;
+        -webkit-overflow-scrolling: touch;
+      }
+      .scrum-cycle-svg {
+        min-width: 680px;
+      }
+      .ad-row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+        border-bottom: 1px dashed var(--border-color);
+        padding-bottom: 12px;
+      }
+      .ad-arrow {
+        transform: rotate(90deg);
+        padding: 5px 0;
+      }
+      .ad-box-secondary {
+        text-align: center;
+      }
+      .quiz-container {
+        padding: 20px;
+        border-radius: 1.25rem;
+        margin: 16px 0;
+      }
+      .quiz-opt {
+        padding: 12px 16px;
+        gap: 10px;
+        border-radius: 0.85rem;
+      }
+      .quiz-actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .quiz-actions button {
+        width: 100% !important;
+        margin-right: 0 !important;
+      }
+      .btn {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .intro-dashboard {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+      }
+      .achievements-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      html {
+        font-size: 13px;
+      }
+      .app-layout {
+        padding: 8px !important;
+        gap: 8px !important;
+      }
+      section {
+        padding: 18px 14px !important;
+        border-radius: 1rem !important;
+      }
+      .section-title {
+        font-size: 1.55rem !important;
+      }
+      .quiz-container {
+        padding: 16px 12px !important;
+        margin: 12px 0 !important;
+      }
+      .quiz-question-card {
+        padding: 16px 10px !important;
+        border-radius: 0.85rem !important;
+      }
+      .quiz-question {
+        font-size: 1.15rem;
+      }
+      .quiz-opt {
+        padding: 10px 12px !important;
+        font-size: 0.85rem;
+      }
+      .achievements-container {
+        padding: 14px !important;
+        margin: 16px auto !important;
+      }
+    }
+
+    /* Achievements Badges Styling */
+    .achievements-container {
+      margin: 32px auto;
+      max-width: 650px;
+      padding: 24px;
+      border: 1px dashed var(--border-color);
+      border-radius: 12px;
+      background-color: var(--bg-secondary);
+      text-align: left;
+    }
+    .achievements-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 550px) {
+      .achievements-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .achievement-card {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Locked state styling */
+    .achievement-card.locked {
+      opacity: 0.45;
+    }
+    .achievement-card.locked .achievement-emoji {
+      filter: grayscale(1) contrast(0.8);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    /* Unlocked state styling */
+    .achievement-card.unlocked {
+      opacity: 1;
+      border-color: var(--accent-primary);
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+    }
+    .achievement-card.unlocked.elite {
+      border-color: var(--accent-secondary);
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1);
+    }
+    .achievement-emoji {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 52px;
+      height: 52px;
+      font-size: 1.8rem;
+      background-color: rgba(99, 102, 241, 0.08);
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+    .achievement-card.unlocked:hover .achievement-emoji {
+      transform: scale(1.1) rotate(5deg);
+    }
+    .achievement-info {
+      flex: 1;
+    }
+    .achievement-name {
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: var(--text-light);
+      margin-bottom: 2px;
+    }
+    .achievement-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .achievement-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      display: inline-block;
+    }
+    .achievement-card.unlocked .achievement-tag {
+      background-color: rgba(99, 102, 241, 0.2);
+      color: var(--accent-primary);
+    }
+    .achievement-card.unlocked.elite .achievement-tag {
+      background-color: rgba(16, 185, 129, 0.2);
+      color: var(--accent-secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Scroll Progress bar -->
+  <div class="progress-bar-container">
+    <div id="progress-bar" class="progress-bar"></div>
+  </div>
+
+  <!-- Mobile Top Header -->
+  <header class="mobile-header">
+    <div class="logo">
+      <span>Code</span><span class="brackets">[]</span>
+    </div>
+    <button class="btn btn-outline" id="menu-toggle" style="padding: 6px 12px;" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+  </header>
+
+  <!-- Sidebar Overlay for mobile -->
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Global Application Frame -->
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div>
+        <div class="logo">
+          <span>Code</span><span class="brackets">[]</span>
+          <span class="academy-badge">ACADEMY</span>
+        </div>
+        <div class="sidebar-subtitle">Scrum Framework Training</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <ul>
+          <li><a href="#inicio" class="nav-link active"><span class="nav-num">01</span>Início</a></li>
+          <li><a href="#oque-e-scrum" class="nav-link"><span class="nav-num">02</span>O que é Scrum?</a></li>
+          <li><a href="#teoria" class="nav-link"><span class="nav-num">03</span>Teoria do Scrum</a></li>
+          <li><a href="#valores" class="nav-link"><span class="nav-num">04</span>Valores do Scrum</a></li>
+          <li><a href="#time" class="nav-link"><span class="nav-num">05</span>Time Scrum</a></li>
+          <li><a href="#eventos" class="nav-link"><span class="nav-num">06</span>Eventos do Scrum</a></li>
+          <li><a href="#artefatos" class="nav-link"><span class="nav-num">07</span>Artefatos do Scrum</a></li>
+          <li><a href="#glossario" class="nav-link"><span class="nav-num">08</span>Glossário</a></li>
+          <li><a href="#quiz" class="nav-link"><span class="nav-num">09</span>Quiz</a></li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>Alinhado ao Scrum Guide 2020</p>
+        <p>© Code[] Academy <span id="current-year">2026</span></p>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="main-content">
+      
+      <!-- SEÇÃO 1: INÍCIO -->
+      <section id="inicio">
+        <div class="section-header">
+          <span class="section-tag">Comece por aqui</span>
+          <h1 class="section-title">Bem-vindo ao Treinamento Scrum</h1>
+          <p class="section-subtitle">Code[] Academy · Baseado no Scrum Guide 2020 Oficial em PT-BR</p>
+        </div>
+
+        <p>Fala, time <strong>Code[]</strong>! Este portal interativo foi organizado para apresentar as regras e fundamentos reais do Scrum de forma direta e sem enrolação. Como somos uma empresa júnior focada em entregar com agilidade e rigor técnico, dominar as diretrizes do Scrum Guide 2020 é fundamental para estruturarmos nossas entregas, lidarmos com escopos complexos e garantirmos valor contínuo em cada Sprint.</p>
+
+        <!-- Course metrics dashboard -->
+        <div class="intro-dashboard">
+          <div class="stat-card">
+            <div class="stat-val">9</div>
+            <div class="stat-label">Módulos de Estudo</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val">25+</div>
+            <div class="stat-label">Conceitos-Chave</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val">3</div>
+            <div class="stat-label">Artefatos do Guia</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val">20</div>
+            <div class="stat-label">Questões do Simulado</div>
+          </div>
+        </div>
+
+        <div style="margin: 35px 0;">
+          <a href="#oque-e-scrum" class="btn btn-primary">Iniciar Estudos</a>
+        </div>
+
+        <!-- Scrum cycle inline SVG diagram -->
+        <div class="diagram-container">
+          <div class="cycle-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Visão Geral do Ciclo Scrum (Sprint Circular)
+          </div>
+          
+          <svg class="scrum-cycle-svg" viewBox="0 0 900 340" width="100%">
+            <defs>
+              <linearGradient id="gradient-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#58A6FF" />
+                <stop offset="100%" stop-color="#1f6feb" />
+              </linearGradient>
+              <linearGradient id="gradient-green" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3FB950" />
+                <stop offset="100%" stop-color="#2ea043" />
+              </linearGradient>
+              <linearGradient id="gradient-coral" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#F78166" />
+                <stop offset="100%" stop-color="#db6d53" />
+              </linearGradient>
+              <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Product Backlog -->
+            <g transform="translate(20, 100)">
+              <rect x="0" y="0" width="120" height="70" rx="6" fill="var(--bg-tertiary)" stroke="var(--border-color)" stroke-width="2" />
+              <line x1="20" y1="20" x2="100" y2="20" stroke="var(--text-secondary)" stroke-width="3" />
+              <line x1="20" y1="35" x2="100" y2="35" stroke="var(--text-secondary)" stroke-width="3" />
+              <line x1="20" y1="50" x2="70" y2="50" stroke="var(--accent-primary)" stroke-width="3" />
+              <text x="60" y="88" fill="var(--text-primary)" font-family="var(--font-mono)" font-size="11" font-weight="600" text-anchor="middle">Product Backlog</text>
+            </g>
+
+            <!-- Arrow -->
+            <path d="M 150 135 L 200 135" fill="none" stroke="var(--border-color)" stroke-width="2" />
+            <polygon points="200,135 192,130 192,140" fill="var(--border-color)" />
+
+            <!-- Sprint Planning -->
+            <g transform="translate(210, 100)">
+              <rect x="0" y="0" width="110" height="70" rx="6" fill="var(--bg-tertiary)" stroke="var(--border-color)" stroke-width="2" />
+              <circle cx="55" cy="35" r="16" fill="none" stroke="var(--accent-tertiary)" stroke-width="2" />
+              <line x1="55" y1="13" x2="55" y2="19" stroke="var(--accent-tertiary)" stroke-width="2" />
+              <line x1="55" y1="51" x2="55" y2="57" stroke="var(--accent-tertiary)" stroke-width="2" />
+              <line x1="33" y1="35" x2="39" y2="35" stroke="var(--accent-tertiary)" stroke-width="2" />
+              <line x1="71" y1="35" x2="77" y2="35" stroke="var(--accent-tertiary)" stroke-width="2" />
+              <text x="55" y="88" fill="var(--text-primary)" font-family="var(--font-mono)" font-size="11" font-weight="600" text-anchor="middle">Sprint Planning</text>
+            </g>
+
+            <!-- Arrow -->
+            <path d="M 330 135 L 380 135" fill="none" stroke="var(--border-color)" stroke-width="2" />
+            <polygon points="380,135 372,130 372,140" fill="var(--border-color)" />
+
+            <!-- Sprint Loop -->
+            <g transform="translate(490, 135)">
+              <path class="sprint-circle" d="M -90,0 A 90,90 0 1,1 90,0 A 90,90 0 1,1 -90,0" fill="none" stroke="url(#gradient-blue)" stroke-width="5" filter="url(#neon-glow)" opacity="0.8" />
+              <polygon points="-90,0 -96,-12 -84,-12" fill="var(--accent-primary)" />
+              
+              <text x="0" y="-12" fill="var(--text-light)" font-family="var(--font-mono)" font-size="16" font-weight="700" text-anchor="middle">SPRINT</text>
+              <text x="0" y="8" fill="var(--text-secondary)" font-family="var(--font-sans)" font-size="10.5" text-anchor="middle">1 a 4 Semanas</text>
+              
+              <!-- Daily Scrum Sub-loop -->
+              <g transform="translate(65, -60)">
+                <circle cx="0" cy="0" r="23" fill="var(--bg-secondary)" stroke="url(#gradient-coral)" stroke-width="3" />
+                <text x="0" y="2" fill="var(--text-primary)" font-family="var(--font-mono)" font-size="8.5" font-weight="600" text-anchor="middle">Daily</text>
+                <text x="0" y="11" fill="var(--accent-tertiary)" font-family="var(--font-mono)" font-size="8.5" font-weight="600" text-anchor="middle">15m</text>
+              </g>
+            </g>
+
+            <!-- Arrow out -->
+            <path d="M 590 135 L 650 135" fill="none" stroke="var(--border-color)" stroke-width="2" />
+            <polygon points="650,135 642,130 642,140" fill="var(--border-color)" />
+
+            <!-- Scrum Events (Right Side columns) -->
+            <g transform="translate(670, 45)">
+              <rect x="0" y="0" width="130" height="50" rx="6" fill="var(--bg-tertiary)" stroke="var(--border-color)" stroke-width="2" />
+              <text x="65" y="28" fill="var(--text-primary)" font-family="var(--font-mono)" font-size="11" font-weight="600" text-anchor="middle">Sprint Review</text>
+              <text x="65" y="44" fill="var(--text-secondary)" font-family="var(--font-mono)" font-size="8.5" text-anchor="middle">⏱ Max 4h</text>
+            </g>
+
+            <g transform="translate(670, 125)">
+              <rect x="0" y="0" width="130" height="50" rx="6" fill="var(--bg-tertiary)" stroke="var(--border-color)" stroke-width="2" />
+              <text x="65" y="28" fill="var(--text-primary)" font-family="var(--font-mono)" font-size="11" font-weight="600" text-anchor="middle">Sprint Retrospective</text>
+              <text x="65" y="44" fill="var(--text-secondary)" font-family="var(--font-mono)" font-size="8.5" text-anchor="middle">⏱ Max 3h</text>
+            </g>
+
+            <g transform="translate(670, 205)">
+              <rect x="0" y="0" width="130" height="50" rx="6" fill="var(--bg-secondary)" stroke="var(--accent-secondary)" stroke-width="1.5" />
+              <text x="65" y="30" fill="var(--accent-secondary)" font-family="var(--font-mono)" font-size="11" font-weight="700" text-anchor="middle">INCREMENTO</text>
+              <text x="65" y="43" fill="var(--text-secondary)" font-family="var(--font-sans)" font-size="8.5" text-anchor="middle">Pronto para Uso (DoD)</text>
+            </g>
+
+            <!-- Returning feedback loop line -->
+            <path d="M 800 150 L 830 150 L 830 280 L 80 280 L 80 180" fill="none" stroke="var(--accent-secondary)" stroke-width="1.5" stroke-dasharray="4,4" />
+            <text x="455" y="295" fill="var(--accent-secondary)" font-family="var(--font-mono)" font-size="10.5" font-weight="500" text-anchor="middle">Inspeção & Adaptação Contínua -> Feedbacks no Product Backlog</text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 2: O QUE É SCRUM? -->
+      <section id="oque-e-scrum">
+        <div class="section-header">
+          <span class="section-tag">Definição Geral</span>
+          <h2 class="section-title">O que é Scrum?</h2>
+          <p class="section-subtitle">A definição fundamental e estrutura essencial segundo o guia oficial</p>
+        </div>
+
+        <p>O Scrum é um <strong>framework leve</strong> desenvolvido para auxiliar pessoas, times e organizações a gerarem valor por meio de soluções adaptativas para problemas complexos.</p>
+
+        <p>Em termos práticos, a dinâmica do Scrum funciona através de um fluxo contínuo e colaborativo onde:</p>
+
+        <div style="margin: 25px 0 35px 0; border-left: 2px solid var(--border-color); padding-left: 20px;">
+          <ol style="list-style-type: decimal; margin-left: 15px; display: flex; flex-direction: column; gap: 12px; color: var(--text-primary);">
+            <li>O <strong>Product Owner</strong> organiza as demandas e necessidades em uma lista priorizada: o <strong>Product Backlog</strong>.</li>
+            <li>O <strong>Time Scrum</strong> seleciona uma meta e uma parte desse trabalho para transformar em um incremento de valor utilizável durante uma <strong>Sprint</strong>.</li>
+            <li>O time e as partes interessadas inspecionam o resultado final e colaboram na definição das próximas prioridades.</li>
+            <li><strong>Próxima Sprint:</strong> O ciclo se repete, aprimorando continuamente o processo e o produto.</li>
+          </ol>
+        </div>
+
+        <blockquote class="scrum-quote">
+          <p>"Scrum é simples. Experimente-o como está e determine se sua filosofia, teoria e estrutura ajudam a atingir objetivos e criar valor. O framework Scrum é propositalmente incompleto, apenas definindo as partes necessárias para implementar a teoria Scrum."</p>
+          <cite>— Scrum Guide 2020 (Edição Oficial em Português, pág. 3)</cite>
+        </blockquote>
+
+        <p>O Scrum se apoia fortemente na inteligência coletiva e na autogestão do time, permitindo que as pessoas determinem juntas a melhor forma de organizar e executar seu próprio trabalho no dia a dia.</p>
+      </section>
+
+      <!-- SEÇÃO 3: TEORIA DO SCRUM -->
+      <section id="teoria">
+        <div class="section-header">
+          <span class="section-tag">A Ciência por trás 🔬</span>
+          <h2 class="section-title">Teoria do Scrum</h2>
+          <p class="section-subtitle">O empirismo, lean thinking e os pilares de entrega</p>
+        </div>
+
+        <p>O Scrum não é achismo. Sua base metodológica vem de duas ideias simples e poderosas que moldam nossa mentalidade técnica:</p>
+        
+        <div style="margin: 20px 0; padding: 15px; background: rgba(88,166,255,0.02); border: 1px solid var(--border-color); border-radius: 6px;">
+          <p style="margin-bottom: 8px;"><strong>• Empirismo:</strong> Significa que a gente aprende fazendo! O conhecimento real vem da prática, da tentativa e erro. Decidimos os rumos do projeto pelo que realmente observamos e medimos em produção, e não por palpites de longo prazo.</p>
+          <p style="margin-bottom: 0;"><strong>• Lean Thinking (Pensamento Enxuto):</strong> Foco total no que agrega! Significa eliminar burocracia, desperdício de tempo e focar a nossa energia estritamente nas entregas fundamentais de valor.</p>
+        </div>
+
+        <p>Ao trabalhar com Scrum, a gente foca em entregas <strong>iterativas e incrementais</strong>, diminuindo riscos e garantindo previsibilidade de software.</p>
+
+        <h3 style="font-family: var(--font-mono); margin-top: 40px; margin-bottom: 20px; color: var(--text-light); font-size: 1.4rem;">Os 3 Pilares Empíricos do Scrum</h3>
+        
+        <div class="card-grid">
+          <!-- Pilar 1 -->
+          <div class="card">
+            <div>
+              <div class="card-icon">👁</div>
+              <h3 class="card-title">1. Transparência</h3>
+              <p class="card-desc">Sem segredos! Todo o fluxo de trabalho e as metas reais precisam estar visíveis para quem coloca a mão na massa (os desenvolvedores) e para quem recebe a entrega.</p>
+            </div>
+            <div style="margin-top: 15px;">
+              <span class="badge badge-blue">Transparency</span>
+            </div>
+          </div>
+
+          <!-- Pilar 2 -->
+          <div class="card">
+            <div>
+              <div class="card-icon">🔍</div>
+              <h3 class="card-title">2. Inspeção</h3>
+              <p class="card-desc">Olho no peixe! Analisamos as entregas e o progresso da Sprint com frequência para identificar bugs, gargalos ou desvios de rota o quanto antes.</p>
+            </div>
+            <div style="margin-top: 15px;">
+              <span class="badge badge-coral">Inspection</span>
+            </div>
+          </div>
+
+          <!-- Pilar 3 -->
+          <div class="card">
+            <div>
+              <div class="card-icon">⚡</div>
+              <h3 class="card-title">3. Adaptação</h3>
+              <p class="card-desc">Mudança rápida! Se algo sai do planejado ou perde qualidade técnica, fazemos ajustes imediatos para corrigir a rota e blindar o produto.</p>
+            </div>
+            <div style="margin-top: 15px;">
+              <span class="badge badge-green">Adaptation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEÇÃO 4: VALORES DO SCRUM -->
+      <section id="valores">
+        <div class="section-header">
+          <span class="section-tag">Cultura & Atitude 🤝</span>
+          <h2 class="section-title">Valores do Scrum</h2>
+          <p class="section-subtitle">Os 5 princípios para fortalecer a colaboração no time (Clique para expandir)</p>
+        </div>
+
+        <p>Quando o time vivencia esses 5 valores no dia a dia, os resultados aparecem de forma consistente: a transparência flui naturalmente, as pessoas colaboram melhor e criamos um ambiente de alta confiança e menos burocracia.</p>
+
+        <!-- Interactive values grid toggling visible paragraphs -->
+        <div style="display: flex; flex-direction: column; gap: 16px; margin: 30px 0;">
+          
+          <!-- Valor 1 -->
+          <div class="value-card" id="val-1" onclick="toggleValueCard('val-1')">
+            <div class="value-card-header">
+              <div class="value-icon">🤝</div>
+              <div class="value-title">Comprometimento (Commitment)</div>
+            </div>
+            <div class="value-card-body">
+              <p>O Time Scrum se compromete a atingir seus objetivos de entrega e a apoiar plenamente uns aos outros.</p>
+            </div>
+            <div class="value-expand-hint">
+              <span>Ver aplicação prática na Code[]</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="value-details">
+              <div class="value-details-inner">
+                <h4>🎯 Atuação prática na Code[]</h4>
+                <p>Nossos desenvolvedores comprometem-se em entregar código testado e nos padrões de qualidade acordados, mantendo um diálogo ativo com o Product Owner durante eventuais atrasos técnicos fundamentados.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Valor 2 -->
+          <div class="value-card" id="val-2" onclick="toggleValueCard('val-2')">
+            <div class="value-card-header">
+              <div class="value-icon">🎯</div>
+              <div class="value-title">Foco (Focus)</div>
+            </div>
+            <div class="value-card-body">
+              <p>O foco central reside no progresso de maior valor em prol das metas da Sprint e do Product Backlog.</p>
+            </div>
+            <div class="value-expand-hint">
+              <span>Ver aplicação prática na Code[]</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="value-details">
+              <div class="value-details-inner">
+                <h4>🎯 Atuação prática na Code[]</h4>
+                <p>Evitamos o "context switching" deletério. Durante uma Sprint em andamento, o time preserva o fluxo de trabalho sem interrupções por demandas aleatórias e sem reuniões improdutivas desnecessárias.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Valor 3 -->
+          <div class="value-card" id="val-3" onclick="toggleValueCard('val-3')">
+            <div class="value-card-header">
+              <div class="value-icon">💬</div>
+              <div class="value-title">Abertura (Openness)</div>
+            </div>
+            <div class="value-card-body">
+              <p>O time Scrum é totalmente transparente sobre o progresso e os desafios reais enfrentados.</p>
+            </div>
+            <div class="value-expand-hint">
+              <span>Ver aplicação prática na Code[]</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="value-details">
+              <div class="value-details-inner">
+                <h4>🎯 Atuação prática na Code[]</h4>
+                <p>Nossas reuniões diárias (Daily Scrum) são honestas. Se um colega de desenvolvimento notar falha crítica de infraestrutura ou atraso em banco, o problema é revelado prontamente para solução grupal.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Valor 4 -->
+          <div class="value-card" id="val-4" onclick="toggleValueCard('val-4')">
+            <div class="value-card-header">
+              <div class="value-icon">🤝</div>
+              <div class="value-title">Respeito (Respect)</div>
+            </div>
+            <div class="value-card-body">
+              <p>Os membros do time se respeitam mutuamente como profissionais autônomos e capazes em suas áreas.</p>
+            </div>
+            <div class="value-expand-hint">
+              <span>Ver aplicação prática na Code[]</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="value-details">
+              <div class="value-details-inner">
+                <h4>🎯 Atuação prática na Code[]</h4>
+                <p>O processo de Code Review é acolhedor e focado no crescimento de todos. Críticas são voltadas exclusivamente a boas práticas de desenvolvimento de código e melhorias conjuntas de arquitetura.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Valor 5 -->
+          <div class="value-card" id="val-5" onclick="toggleValueCard('val-5')">
+            <div class="value-card-header">
+              <div class="value-icon">🦁</div>
+              <div class="value-title">Coragem (Courage)</div>
+            </div>
+            <div class="value-card-body">
+              <p>Todos têm coragem para fazer o correto, encarar empecilhos complexos e inovar conscientemente.</p>
+            </div>
+            <div class="value-expand-hint">
+              <span>Ver aplicação prática na Code[]</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="value-details">
+              <div class="value-details-inner">
+                <h4>🎯 Atuação prática na Code[]</h4>
+                <p>Coragem para alertar o Product Owner quando um prazo proposto comprometer severamente as regras da Definition of Done (DoD) e coragem para apontar problemas internos nas retroespectivas de processo.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SEÇÃO 5: TIME SCRUM -->
+      <section id="time">
+        <div class="section-header">
+          <span class="section-tag">Quem faz acontecer 💻</span>
+          <h2 class="section-title">Time Scrum</h2>
+          <p class="section-subtitle">Papéis práticos, responsabilidades e união de time</p>
+        </div>
+
+        <p>No Scrum original, não tem espaço para burocracia ou mini-chefão. O <strong>Time Scrum (Scrum Team)</strong> é uma equipe única, ultra coesa e focada no mesmo objetivo, composta por um Scrum Master, um Product Owner e os Developers. Sem barreiras ou silos feudais!</p>
+
+        <!-- Compact role organogram layout -->
+        <div class="organogram">
+          <div class="sc-node sc-node-team-core">TIME SCRUM (Time único de até 10 pessoas)</div>
+          <div class="sc-roles-grid">
+            <div class="sc-role-card">
+              <div class="sc-role-emoji">🚀</div>
+              <div class="sc-role-name">Developers</div>
+              <div class="sc-role-subtitle">Mão-na-massa / Entrega</div>
+            </div>
+            <div class="sc-role-card">
+              <div class="sc-role-emoji">👑</div>
+              <div class="sc-role-name">Product Owner</div>
+              <div class="sc-role-subtitle">Valor estratégico</div>
+            </div>
+            <div class="sc-role-card">
+              <div class="sc-role-emoji">🎯</div>
+              <div class="sc-role-name">Scrum Master</div>
+              <div class="sc-role-subtitle">Facilitador / Escudo do time</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background-color: var(--bg-secondary); border: 1px dashed var(--border-color); border-radius: 6px; padding: 20px; margin-bottom: 30px;">
+          <p style="margin-bottom: 0;">⭐️ O time é <strong>multifuncional (cross-functional)</strong>, o que significa que temos gente com todas as habilidades necessárias para desenhar, codar e entregar um incremento pronto sem depender de silos externos. Além de tudo, somos <strong>auto-gerenciáveis (self-managing)</strong>: o próprio time decide quem faz o quê, como e quando. É autonomia e responsabilidade de verdade!</p>
+        </div>
+
+        <!-- Role Panels detailing duties -->
+        <div class="time-details-layout">
+          
+          <!-- Developers -->
+          <div class="role-detail-panel">
+            <div class="role-detail-header">
+              <h3 class="role-detail-title">💻 Os Developers</h3>
+              <span class="badge badge-blue">Quem desenvolve e entrega</span>
+            </div>
+            <p>Os Developers têm papel central no Scrum: são os profissionais do time técnico focados em planejar, codificar e testar o incremento usável e de alto valor a cada Sprint.</p>
+            <div class="role-section-title">Responsabilidades Formais:</div>
+            <ul class="role-bullet-list">
+              <li>Criar o plano de trabalho diário: o <strong>Sprint Backlog</strong>.</li>
+              <li>Garantir o foco em qualidade, seguindo rigorosamente a <strong>Definition of Done</strong> (Definição de Pronto).</li>
+              <li>Ajustar as tarefas e o plano técnico diariamente para garantir o alcance do <strong>Sprint Goal</strong>.</li>
+              <li>Responsabilizar-se mutuamente como profissionais pelo resultado do time.</li>
+            </ul>
+          </div>
+
+          <!-- Product Owner -->
+          <div class="role-detail-panel">
+            <div class="role-detail-header">
+              <h3 class="role-detail-title">👑 O Product Owner (PO)</h3>
+              <span class="badge badge-green">Estratégia e Prioridades</span>
+            </div>
+            <p>O PO define as prioridades. É a pessoa responsável por maximizar o valor do produto resultante do trabalho do Time Scrum, alinhando as necessidades da organização com a execução técnica.</p>
+            <div class="role-section-title">Responsabilidades Formais:</div>
+            <ul class="role-bullet-list">
+              <li>Desenhar e compartilhar com clareza a visão de longo prazo do produto através do <strong>Product Goal</strong>.</li>
+              <li>Definir, detalhar e ordenar de forma clara os itens no <strong>Product Backlog</strong>.</li>
+              <li>Manter o Product Backlog visível, transparente e compreendido por todos.</li>
+              <li>Atuar de forma autônoma na tomada de decisão sobre o produto, com decisões apoiadas por toda a organização.</li>
+            </ul>
+          </div>
+
+          <!-- Scrum Master -->
+          <div class="role-detail-panel">
+            <div class="role-detail-header">
+              <h3 class="role-detail-title">🛡️ O Scrum Master (SM)</h3>
+              <span class="badge badge-coral text-xs">Facilitador e Líder Servidor</span>
+            </div>
+            <p>O Scrum Master é responsável por estabelecer o Scrum conforme definido no guia oficial. Atua como um líder que ajuda o Scrum Team e a organização a melhorarem sua eficácia, removendo impedimentos no fluxo de trabalho.</p>
+            <div class="role-section-title">Formas Cruciais de Atuação:</div>
+            <ul class="role-bullet-list">
+              <li><strong>Para o Time:</strong> Auxilia na autogestão, apoia o foco na entrega de incrementos prontos e remove impedimentos que barram o progresso.</li>
+              <li><strong>Para o PO:</strong> Colabora no planejamento empírico do produto e auxilia na definição e gerenciamento claro do Product Backlog.</li>
+              <li><strong>Para a Empresa:</strong> Lidera e orienta a adoção do Scrum, ajudando colaboradores e partes interessadas a compreenderem abordagens empíricas.</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SEÇÃO 6: EVENTOS DO SCRUM -->
+      <section id="eventos">
+        <div class="section-header">
+          <span class="section-tag">Ritos de Entrega ⏱</span>
+          <h2 class="section-title">Eventos do Scrum</h2>
+          <p class="section-subtitle">O Container 'Sprint' e os rituais focados em feedback e entrega contínua</p>
+        </div>
+
+        <p>Os Eventos do Scrum são oportunidades práticas e diretas feitas sob medida para o time alinhar o progresso, inspecionar resultados e ajustar a rota na hora, evitando aquelas reuniões chatas e infinitas que não chegam a lugar nenhum!</p>
+
+        <!-- Events Accordion Layout -->
+        <div class="accordion">
+          
+          <!-- Evento 1 -->
+          <div class="accordion-item" id="ev-1">
+            <div class="accordion-header" onclick="toggleAccordion('ev-1')">
+              <div class="accordion-title-container">
+                <span style="font-size: 1.4rem;">🏃‍♂️</span>
+                <span class="accordion-title">1. A Sprint (Container Central)</span>
+              </div>
+              <div style="display: flex; align-items: centre; gap: 15px;">
+                <span class="badge badge-blue">⏱ Max 1 Mês</span>
+                <span class="accordion-arrow">▼</span>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                <p>A Sprint constitui o ciclo delimitado ou evento contentor que envelopa todo o desenvolvimento. A cada Sprint, novos incrementos de valor são consolidados e postos à prova.</p>
+                <p><strong>Regras Importantes:</strong></p>
+                <ul class="role-bullet-list" style="margin-left: 15px;">
+                  <li>Uma nova Sprint começa obrigatoriamente logo em seguida da conclusão da Sprint anterior.</li>
+                  <li>Inexistem desvios ou alterações que mitiguem ou deponham o <strong>Sprint Goal</strong>.</li>
+                  <li>O Product Backlog é continuamente refinado ao longo da Sprint conforme necessidades e aprendizados.</li>
+                  <li>Uma Sprint ativa só pode ser legitimamente cancelada pelo Product Owner se o objetivo estratégico macro do produto tornar-se obsoleto de mercado.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evento 2 -->
+          <div class="accordion-item" id="ev-2">
+            <div class="accordion-header" onclick="toggleAccordion('ev-2')">
+              <div class="accordion-title-container">
+                <span style="font-size: 1.4rem;">📅</span>
+                <span class="accordion-title">2. Sprint Planning</span>
+              </div>
+              <div style="display: flex; align-items: centre; gap: 15px;">
+                <span class="badge badge-green">⏱ Max 8 Horas</span>
+                <span class="accordion-arrow">▼</span>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                <p>Inicia oficialmente o desenvolvimento técnico da Sprint delimitando o trabalho e hipóteses de metas a serem concluídas.</p>
+                <p><strong>O Planejamento tático debate obrigatoriamente três vertentes chaves de metas:</strong></p>
+                <ol style="list-style-type: decimal; margin-left:18px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 6px;">
+                  <li><strong>Tópico 1 — Por que esta Sprint é valiosa?</strong> O time formula articuladamente o <strong>Sprint Goal</strong>.</li>
+                  <li><strong>Tópico 2 — O que pode ser feito nesta Sprint?</strong> Seleciona-se as tarefas no Product Backlog.</li>
+                  <li><strong>Tópico 3 — Como o trabalho será realizado?</strong> Organiza-se o plano de ação que comporá o Sprint Backlog.</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evento 3 -->
+          <div class="accordion-item" id="ev-3">
+            <div class="accordion-header" onclick="toggleAccordion('ev-3')">
+              <div class="accordion-title-container">
+                <span style="font-size: 1.4rem;">⏱</span>
+                <span class="accordion-title">3. Daily Scrum (Reunião Diária)</span>
+              </div>
+              <div style="display: flex; align-items: centre; gap: 15px;">
+                <span class="badge badge-coral">⏱ 15 Minutos</span>
+                <span class="accordion-arrow">▼</span>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                <p>O rito diário de alinhamento técnico projetado exclusivamente para que os <strong>Developers</strong> inspecionem as metas e reajustem as próximas frentes operacionais em direção à meta comum.</p>
+                <p><strong>Características:</strong></p>
+                <ul class="role-bullet-list" style="margin-left: 15px;">
+                  <li>Rigorosamente 15 minutos em horário e local constantes para reduzir redundâncias burocráticas.</li>
+                  <li>Dá plena autonomia para que os Developers escolham os formatos, estruturas ou fluxogramas de acompanhamento.</li>
+                  <li>Não se resume ao único cenário de realinhamento técnico do dia. Os Developers reúnem-se ao longo da jornada caso complexidades despontem.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evento 4 -->
+          <div class="accordion-item" id="ev-4">
+            <div class="accordion-header" onclick="toggleAccordion('ev-4')">
+              <div class="accordion-title-container">
+                <span style="font-size: 1.4rem;">📊</span>
+                <span class="accordion-title">4. Sprint Review (Revisão da Sprint)</span>
+              </div>
+              <div style="display: flex; align-items: centre; gap: 15px;">
+                <span class="badge badge-blue">⏱ Max 4 Horas</span>
+                <span class="accordion-arrow">▼</span>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                <p>A penúltima etapa dedicada à colaboração real, onde o time revisa o final da Sprint junto a convidados, colhendo feedbacks cruciais.</p>
+                <p><strong>Premissas:</strong></p>
+                <ul class="role-bullet-list" style="margin-left: 15px;">
+                  <li>Sessão tática de cocriação de processo. Deve-se repelir transformá-la em uma mera "apresentação de slides fria".</li>
+                  <li>Debate-se os dados em vistas às realidades de mercado e ao alcance do <strong>Product Goal</strong> estratégica.</li>
+                  <li>O Product Backlog é consequentemente atualizado diante de novos insights colhidos da revisão.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evento 5 -->
+          <div class="accordion-item" id="ev-5">
+            <div class="accordion-header" onclick="toggleAccordion('ev-5')">
+              <div class="accordion-title-container">
+                <span style="font-size: 1.4rem;">🔄</span>
+                <span class="accordion-title">5. Sprint Retrospective (Retrospectiva)</span>
+              </div>
+              <div style="display: flex; align-items: centre; gap: 15px;">
+                <span class="badge badge-green">⏱ Max 3 Horas</span>
+                <span class="accordion-arrow">▼</span>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="accordion-content-inner">
+                <p>O evento oficial que encerra formalmente as atividades e ritos de uma Sprint em views de propor melhorias metodológicas contínuas em processos, ferramentas, relacionamentos e qualidade de fluxo.</p>
+                <p><strong>Detalhamentos de Foco:</strong></p>
+                <ul class="role-bullet-list" style="margin-left: 15px;">
+                  <li>Avalia-se a jornada pregressa observando desvios na Definition of Done (DoD).</li>
+                  <li>O time prioriza a idealização e documentação de planos de ação práticos para execução imediata em prol da agilidade na Sprint seguinte.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SEÇÃO 7: ARTEFATOS DO SCRUM -->
+      <section id="artefatos">
+        <div class="section-header">
+          <span class="section-tag">Entregas Reais 📦</span>
+          <h2 class="section-title">Artefatos do Scrum</h2>
+          <p class="section-subtitle">Os 3 elementos fundamentais e seus compromissos oficiais de qualidade</p>
+        </div>
+
+        <p>Os artefatos são o resultado palpável do trabalho do time. Eles dão visibilidade total ao status real do projeto e, para garantir o foco e alinhamento máximo, cada um deles carrega um <strong>Compromisso Formal</strong> de altíssimo nível:</p>
+
+        <!-- Diagram representating artifact commitment pairings -->
+        <div class="artefatos-diagram">
+          <div class="ad-title">Metas e Compromissos Associados</div>
+          <div class="ad-flow">
+            <div class="ad-row">
+              <div class="ad-box ad-box-primary">Product Backlog</div>
+              <div class="ad-arrow">➡️</div>
+              <div class="ad-box ad-box-secondary">Product Goal <br><span style="font-family: var(--font-sans); font-size: 0.8rem; color: var(--text-secondary);">Foco estratégico de longo prazo do produto</span></div>
+            </div>
+            <div class="ad-row">
+              <div class="ad-box ad-box-primary">Sprint Backlog</div>
+              <div class="ad-arrow">➡️</div>
+              <div class="ad-box ad-box-secondary">Sprint Goal <br><span style="font-family: var(--font-sans); font-size: 0.8rem; color: var(--text-secondary);">Meta única, tática e focada para a Sprint</span></div>
+            </div>
+            <div class="ad-row">
+              <div class="ad-box ad-box-primary">Incremento (Done)</div>
+              <div class="ad-arrow">➡️</div>
+              <div class="ad-box ad-box-secondary">Definition of Done <br><span style="font-family: var(--font-sans); font-size: 0.8rem; color: var(--text-secondary);">Padrão formal mínimo de qualidade do incremento</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 24px; margin-top: 35px;">
+          
+          <!-- Product Backlog -->
+          <div class="role-detail-panel" style="background-color: rgba(13, 17, 23, 0.3);">
+            <h3 class="card-title" style="color: var(--accent-primary);">1. Product Backlog (Compromisso: Product Goal)</h3>
+            <p>O Product Backlog consiste no inventário priorizado e emergente de tudo que constitui potencial evolução, novos recursos ou requisitos do produto. É a única fonte idônea para demandas atribuídas ao Time Scrum.</p>
+            <p style="font-size: 0.95rem; color: var(--text-secondary);"><em>* Product Goal:</em> Representa a bússola de longo termo. O Product Backlog se expande para alimentar o seu cumprimento gradativo. O time conclui ou descarta um Product Goal antes de perseguir o seguinte.</p>
+          </div>
+
+          <!-- Sprint Backlog -->
+          <div class="role-detail-panel" style="background-color: rgba(13, 17, 23, 0.3);">
+            <h3 class="card-title" style="color: var(--accent-tertiary);">2. Sprint Backlog (Compromisso: Sprint Goal)</h3>
+            <p>Composto pela Meta da Sprint (por que), a seleção de itens de Backlog (o que) e o plano de ação de desenvolvimento granular delineado (como). É atualizado continuadamente ao longo dos dias pelos Developers.</p>
+            <p style="font-size: 0.95rem; color: var(--text-secondary);"><em>* Sprint Goal:</em> Constitui o norte que motiva e une os Developers focados em cooperação mútua, provendo alto dinamismo no como as tarefas serão realizadas.</p>
+          </div>
+
+          <!-- Incremento -->
+          <div class="role-detail-panel" style="background-color: rgba(13, 17, 23, 0.3);">
+            <h3 class="card-title" style="color: var(--accent-secondary);">3. Incremento (Compromisso: Definition of Done)</h3>
+            <p>O Incremento representa passos reais em vistas ao alcance de nossas visões de negócio. Para possuir real utilidade, o código modificado deve ser plenamente utilizável em vias ao usuário final.</p>
+            <p style="font-size: 0.95rem; color: var(--text-secondary);"><em>* Definition of Done (DoD):</em> A governança formal que certifica a qualidade do código. Só nasce de fato um incremento se as demandas completarem com sucesso todas as regras estritas da DoD.</p>
+          </div>
+
+          <!-- Prática Complementar: DoR vs DoD -->
+          <div class="role-detail-panel" style="background-color: rgba(255, 255, 255, 0.02); border: 1px dashed var(--border-color); margin-top: 24px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <span style="font-size: 1.25rem;">🔍</span>
+              <h4 style="margin: 0; font-size: 1.1rem; color: var(--accent-primary); font-family: var(--font-sans);">Prática de Mercado: Definition of Ready (DoR) vs. Definition of Done (DoD)</h4>
+            </div>
+            <p style="font-size: 0.95rem; margin-bottom: 12px; line-height: 1.6;">
+              Embora o <strong>Scrum Guide 2020 oficial não prescreva uma "Definition of Ready" (DoR)</strong> para evitar etapas burocráticas e gargalos, a maioria dos times de desenvolvimento de alta performance utiliza o DoR como um guia complementar prático de mercado.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" style="margin-top: 15px;">
+              <div style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 6px;">
+                <strong style="color: var(--accent-tertiary); display: block; margin-bottom: 6px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Definition of Ready (DoR)</strong>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                  <strong>Portão de Entrada da Sprint:</strong> Focado no Product Backlog. Determina se uma demanda está madura, descrita e clara o bastante para que os Developers consigam estimá-la e puxá-la para a Sprint sem bloqueios imediatos.
+                </p>
+              </div>
+              <div style="background: rgba(0,0,0,0.2); padding: 16px; border-radius: 6px;">
+                <strong style="color: var(--accent-secondary); display: block; margin-bottom: 6px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">Definition of Done (DoD)</strong>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                  <strong>Portão de Saída da Sprint (Compromisso Oficial):</strong> Focado no Incremento. Estabelece se as entregas completaram o crivo de qualidade técnica e validações necessárias para que o resultado final seja de fato considerado utilizável.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SEÇÃO 8: GLOSSÁRIO -->
+      <section id="glossario">
+        <div class="section-header">
+          <span class="section-tag">Dicionário de Termos</span>
+          <h2 class="section-title">Glossário Scrum</h2>
+          <p class="section-subtitle">Realize pesquisas rápidas e filtre termos lógicos em tempo real</p>
+        </div>
+
+        <div class="search-container">
+          <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="glossary-search" class="search-input" placeholder="Digite termos... (ex: Sprint, Empirismo, Done)">
+          </div>
+        </div>
+
+        <div class="glossary-card-grid" id="glossary-grid">
+          
+          <div class="glossary-card">
+            <span class="glossary-term">Artefato</span>
+            <p class="glossary-def">Objetos de relevância definidos pelo Scrum para prover transparência plena ao progresso. São o Product Backlog, Sprint Backlog e Incremento.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Definition of Done (DoD)</span>
+            <p class="glossary-def">O compromisso formal do Incremento que descreve as medidas estritas de qualidade e integridade do código do software ágil.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Definition of Ready (DoR)</span>
+            <p class="glossary-def">Prática complementar de mercado usada pelos times ágeis para estabelecer se um item do backlog está maduro e claro o suficiente para ser estimado e puxado para a Sprint.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Developer</span>
+            <p class="glossary-def">O membro comprometido inteiramente com a modelagem, qualidade e desenvolvimento do incremento a cada etapa de execução.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Empirismo</span>
+            <p class="glossary-def">Doutrina metodológica de embasamento que proclama a observação fática e experiências de uso reais como bússola de planos táticos.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Evento</span>
+            <p class="glossary-def">Sessões estruturadas projetadas especificamente no Scrum para propiciar transparência nas realizações táticas em views de melhorias.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Impedimento</span>
+            <p class="glossary-def">Problemas, ruídos ou barreiras internas/externas que freiam o desenvolvimento técnico. A eliminação destes é papel do Scrum Master.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Incremento</span>
+            <p class="glossary-def">Versão concreta, testada e em estado pronto do produto final gerado ao concluir uma parcela do backlog.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Lean Thinking</span>
+            <p class="glossary-def">Princípios focados na redução drástica de burocracias e desperdícios organizacionais com vistas em manter foco apenas no importante.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Product Backlog</span>
+            <p class="glossary-def">A única listagem idônea e evolutiva com demandas e ideias desenhadas sobre os planos táticos do ecossistema do produto.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Product Goal</span>
+            <p class="glossary-def">A meta de planejamento tático de longo termo do Product Backlog com vistas a consolidar estratégias claras de negócio.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Product Owner</span>
+            <p class="glossary-def">Portaria de negócios do Scrum encarregada individualmente pela modelagem do ROI e priorização sadia do backlog cooperado.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Refinamento</span>
+            <p class="glossary-def">Fluxo continuado focado na fragmentação teórica de demandas amplas em frentes executáveis de menor escala mais precisas.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Scrum</span>
+            <p class="glossary-def">O framework leve e estratégico de desenvolvimento iterativo para entrega ágil voltado em dar sustentabilidade a times complexos.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Scrum Master</span>
+            <p class="glossary-def">Papel de governança metodológica e facilitação focada em garantir o avanço do time em conformidade às regras do scrum.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Sprint</span>
+            <p class="glossary-def">O container temporal ou delimitação fixa de tempo de até 30 dias que abriga as evoluções necessárias sob plano.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Sprint Backlog</span>
+            <p class="glossary-def">Conjunto de itens selecionados para a Sprint (o que), o Sprint Goal (porque), e o passo a passo diário da arquitetura (como).</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Sprint Goal</span>
+            <p class="glossary-def">Compostos estratégicos formulados na Planning em views de conferir autonomia ao time na execução da Sprint ativa.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Time Scrum</span>
+            <p class="glossary-def">A equipe coesa e multifuncional reunindo o Scrum Master, os Developers e o Product Owner dedicados a um produto comum.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Timebox</span>
+            <p class="glossary-def">Delimitação firme de teto temporal irrevogável direcionada para conter eventos em views de manter dinamismo.</p>
+          </div>
+
+          <div class="glossary-card">
+            <span class="glossary-term">Transparência</span>
+            <p class="glossary-def">O pilar empírico do Scrum focado em dar clareza no processo a todas as frentes ligadas de desenvolvimento de produtos.</p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SEÇÃO 9: QUIZ -->
+      <section id="quiz">
+        <div class="section-header">
+          <span class="section-tag">Avaliação</span>
+          <h2 class="section-title">Quiz de Conhecimento</h2>
+          <p class="section-subtitle">20 questões estruturadas para validar o seu domínio das regras e papéis do Scrum Guide 2020</p>
+        </div>
+
+        <div class="quiz-container" id="quiz-container">
+          
+          <!-- State 1: Welcome Screen -->
+          <div id="quiz-welcome-screen" style="animation: fadeIn 0.4s ease;">
+            <div style="text-align: center; padding: 20px 0;">
+              <span style="font-size: 3rem; display: block; margin-bottom: 20px;">🧠</span>
+              <h3 class="quiz-title">Pronto para testar seus conhecimentos no Scrum?</h3>
+              <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 25px auto;">
+                Este simulado foi modelado com base nas avaliações e exames oficiais do Scrum. São 20 questões de múltipla escolha focadas no Scrum Guide 2020 oficial em PT-BR. Responda a todas em sequência para ver, ao final, o detalhamento de seus acertos e erros fundamentados nas diretrizes reais do guia.
+              </p>
+              <button class="btn btn-primary" id="btn-start-quiz">Iniciar Simulado</button>
+            </div>
+          </div>
+
+          <!-- State 2: Active Question Screen -->
+          <div id="quiz-active-screen" style="display: none;">
+            
+            <!-- Progress indicators -->
+            <div class="quiz-progression">
+              <div class="quiz-progress-text">
+                <span id="quiz-question-counter">Questão 1 de 20</span>
+                <span id="quiz-accuracy-indicator" style="color: var(--accent-secondary); display: none !important;">Acertos: 0/0</span>
+              </div>
+              <div class="quiz-progress-outer">
+                <div id="quiz-progress-inner" class="quiz-progress-inner"></div>
+              </div>
+            </div>
+
+            <!-- Question container -->
+            <div class="quiz-question-card">
+              <span id="quiz-question" class="quiz-question">Enunciado da pergunta</span>
+            </div>
+
+            <!-- Options lists -->
+            <div class="quiz-options" id="quiz-options-container">
+              <!-- JS will inject options here -->
+            </div>
+
+            <!-- Instant Correction Feedback (hidden by default) -->
+            <div class="quiz-feedback" id="quiz-feedback-container">
+              <div class="quiz-feedback-status" id="quiz-feedback-status">
+                <!-- Status title and icon -->
+              </div>
+              <div class="quiz-feedback-text" id="quiz-feedback-text">
+                <!-- Correct options texts -->
+              </div>
+              <div class="quiz-feedback-explanation" id="quiz-feedback-explanation">
+                <!-- Explanations from the official guide -->
+              </div>
+            </div>
+
+            <!-- Actions buttons -->
+            <div class="quiz-actions">
+              <button class="btn btn-outline" id="btn-prev-question" style="display: none; margin-right: auto;">Voltar</button>
+              <button class="btn btn-outline" id="btn-confirm-answer" disabled>Confirmar Resposta</button>
+              <button class="btn btn-primary" id="btn-next-question" style="display: none;">Próxima Questão</button>
+            </div>
+
+          </div>
+
+          <!-- State 3: Results screen -->
+          <div id="quiz-results-screen" class="quiz-results-screen">
+            <span style="font-size: 3rem; display: block; margin-bottom: 10px;">🏆</span>
+            <h3 class="quiz-title">Sua Avaliação foi Concluída!</h3>
+            
+            <div class="results-score-circle">
+              <span class="results-score-num" id="results-score-percent">0%</span>
+              <span class="results-score-total" id="results-score-fraction">0 / 20</span>
+            </div>
+
+            <div class="results-level" id="results-level-title">Expert</div>
+            <p class="results-desc" id="results-level-desc">Descrição do nível obtido</p>
+
+            <!-- Achievements / Conquistas Desbloqueadas -->
+            <div class="achievements-container">
+              <div class="achievements-title">
+                <span>🏅</span> Conquistas de Desempenho
+              </div>
+              <div class="achievements-grid">
+                <!-- Badge 1: Iniciado -->
+                <div class="achievement-card locked" id="achievement-iniciado">
+                  <div class="achievement-emoji">📚</div>
+                  <div class="achievement-info">
+                    <div class="achievement-name">Iniciado no Scrum</div>
+                    <div class="achievement-desc">Simulado concluído pela primeira vez.</div>
+                    <span class="achievement-tag" id="achievement-tag-iniciado">Bloqueado 🔒</span>
+                  </div>
+                </div>
+                <!-- Badge 2: Guardião -->
+                <div class="achievement-card locked" id="achievement-guardiao">
+                  <div class="achievement-emoji">🛡️</div>
+                  <div class="achievement-info">
+                    <div class="achievement-name">Guardião do Fluxo</div>
+                    <div class="achievement-desc">Alcançou pelo menos 50% de acerto nas questões.</div>
+                    <span class="achievement-tag" id="achievement-tag-guardiao">Bloqueado 🔒</span>
+                  </div>
+                </div>
+                <!-- Badge 3: Mentor -->
+                <div class="achievement-card locked" id="achievement-mentor">
+                  <div class="achievement-emoji">🎓</div>
+                  <div class="achievement-info">
+                    <div class="achievement-name">Agilista de Respeito</div>
+                    <div class="achievement-desc">Demonstrou bom aproveitamento marcando 70% ou mais.</div>
+                    <span class="achievement-tag" id="achievement-tag-mentor">Bloqueado 🔒</span>
+                  </div>
+                </div>
+                <!-- Badge 4: Evangelista -->
+                <div class="achievement-card locked" id="achievement-evangelista">
+                  <div class="achievement-emoji">👑</div>
+                  <div class="achievement-info">
+                    <div class="achievement-name">Mestre do Scrum</div>
+                    <div class="achievement-desc">Superou 85% de acertos nas regras oficiais.</div>
+                    <span class="achievement-tag" id="achievement-tag-evangelista">Bloqueado 🔒</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+              <button class="btn btn-primary" id="btn-restart-quiz">Tentar Novamente</button>
+              <button class="btn btn-outline" id="btn-toggle-review">Revisar Respostas</button>
+            </div>
+
+            <!-- Review wrong answers cards list -->
+            <div class="review-section" id="review-section">
+              <h4 class="review-title">Revisão Completa e Explicações</h4>
+              <div class="review-list" id="review-list-container">
+                <!-- JS will inject wrong questions cards here -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Float Action Scroll to top -->
+  <button id="back-to-top" class="back-to-top" aria-label="Voltar para o topo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <script>
+    /* COMPACT QUIZ METADATA */
+    const quizQuestions = [
+      {
+        id: 1,
+        q: "Qual é o timebox máximo de uma Sprint?",
+        options: ["2 semanas", "1 mês", "3 meses", "6 semanas"],
+        answer: 1,
+        explanation: "Conforme o Scrum Guide 2020, Sprints têm timebox de no máximo 1 mês. Sprints maiores aumentam a complexidade ao passo que Sprints curtas provêm ciclos rápidos de feedback práticos."
+      },
+      {
+        id: 2,
+        q: "Quem tem autoridade para cancelar uma Sprint?",
+        options: ["O Scrum Master", "Os Developers", "O Product Owner", "A liderança da organização"],
+        answer: 2,
+        explanation: "Somente o Product Owner tem autoridade de cancelamento se a meta da Sprint (Sprint Goal) se tornar obsoleta em relação ao negócio."
+      },
+      {
+        id: 3,
+        q: "Qual é o timebox do Daily Scrum?",
+        options: ["30 minutos", "1 hora", "15 minutos", "Sem timebox definido"],
+        answer: 3,
+        explanation: "O Daily Scrum tem timebox estrito de 15 minutos, executado em horário e local consistentes ao longo de todos os dias da Sprint activa."
+      },
+      {
+        id: 4,
+        q: "Quantos Developers devem compor o Time Scrum?",
+        options: [
+          "Exatamente 7 integrantes selecionados pela gerência corporativa da empresa",
+          "Entre 3 e 9 desenvolvedores, excluindo o Scrum Master e o Product Owner",
+          "Não há limite para Developers, mas o Scrum Team geral tem 10 pessoas ou menos",
+          "Qualquer tamanho de equipe, desde que decidido na primeira Sprint do projeto"
+        ],
+        answer: 2,
+        explanation: "O Scrum Guide 2020 não define cota de desenvolvedores, mas orienta que o time total seja composto por 10 integrantes ou menos para reter agilidade e facilidade comunicacional."
+      },
+      {
+        id: 5,
+        q: "Qual artefato tem o Product Goal como compromisso?",
+        options: ["Sprint Backlog", "Incremento", "Product Backlog", "Definition of Done"],
+        answer: 2,
+        explanation: "O Product Goal consiste no compromisso estratégico formal do Product Backlog, retratando o foco de longo prazo do produto."
+      },
+      {
+        id: 6,
+        q: "O que acontece ao trabalho não concluído ao final de uma Sprint?",
+        options: ["É descartado", "Retorna ao Product Backlog", "É automaticamente incluído na próxima Sprint", "O Scrum Master decide o destino"],
+        answer: 1,
+        explanation: "O trabalho incompleto (que não atinge a Definition of Done) não pode ser apresentado na Revisão da Sprint, e retorna ao Product Backlog para repriorização futura pelo PO."
+      },
+      {
+        id: 7,
+        q: "Quais são os três pilares do empirismo no Scrum?",
+        options: ["Planejamento, Execução e Revisão", "Transparência, Inspeção e Adaptação", "Comprometimento, Foco e Coragem", "Velocidade, Qualidade e Entrega"],
+        answer: 1,
+        explanation: "A fundação empírica do Scrum sustenta-se sob três pilares indiscutíveis: a Transparência, a Inspeção e a Adaptação."
+      },
+      {
+        id: 8,
+        q: "Qual é o timebox da Sprint Planning para uma Sprint de 1 mês?",
+        options: ["4 horas", "6 horas", "8 horas", "2 horas"],
+        answer: 2,
+        explanation: "O planejamento inicial da Sprint é contido no limite máximo de 8 horas para uma Sprint de duração de 1 mês útil."
+      },
+      {
+        id: 9,
+        q: "Quem é responsável pelo gerenciamento eficaz do Product Backlog?",
+        options: ["O Scrum Master", "Os Developers", "O Product Owner", "A equipe de gestão da organização"],
+        answer: 2,
+        explanation: "O Product Owner retém a responsabilidade unificada pelo gerenciamento e definição sadia dos itens no Product Backlog."
+      },
+      {
+        id: 10,
+        q: "Qual é o propósito do Sprint Goal?",
+        options: [
+          "Oferecer um substituto completo para o Product Backlog estratégico",
+          "Criar foco e flexibilidade para incentivar o trabalho em equipe dos Developers",
+          "Mapear de forma exata todas as tarefas de desenvolvimento da equipe ágil",
+          "Formalizar os requisitos finais acordados com o cliente do projeto"
+        ],
+        answer: 1,
+        explanation: "O Sprint Goal retrata o único farol motivador da Sprint, garantindo foco integrado e flexibilidade na execução."
+      },
+      {
+        id: 11,
+        q: "Quais são os cinco valores do Scrum?",
+        options: ["Velocidade, Qualidade, Colaboração, Entrega e Melhoria", "Comprometimento, Foco, Abertura, Respeito e Coragem", "Transparência, Inspeção, Adaptação, Empirismo e Lean", "Planejamento, Execução, Revisão, Retrospectiva e Melhoria"],
+        answer: 1,
+        explanation: "Os cinco pilares morais que consolidam o Scrum são: Comprometimento, Foco, Abertura, Respeito e Coragem."
+      },
+      {
+        id: 12,
+        q: "Qual é a responsabilidade do Scrum Master em relação ao Time Scrum?",
+        options: [
+          "Gerenciar prazos, recursos financeiros e avaliar o desempenho individual dos membros",
+          "Distribuir e cobrar as tarefas diariamente de cada um dos Developers no Daily Scrum",
+          "Facilitar a melhoria contínua e a eficácia das práticas do time na teoria e prática",
+          "Analisar e aprovar formalmente cada item que o Product Owner inserir no Backlog"
+        ],
+        answer: 2,
+        explanation: "O fito crucial do Scrum Master é atuar de forma facilitadora para aumentar a eficácia do time através da evolução ágil em conformidade ao framework."
+      },
+      {
+        id: 13,
+        q: "O que é a Definition of Done?",
+        options: [
+          "A listagem de todas as atividades e tarefas que os Developers do time ágil precisam cumprir",
+          "A descrição formal do estado em que o Incremento atende a todas as medidas de qualidade do produto",
+          "O conjunto de critérios de aceitação específicos levantados para cada funcionalidade",
+          "O roteiro de testes e regras usado pelo Scrum Master para aprovar o trabalho executado"
+        ],
+        answer: 1,
+        explanation: "A DoD consiste no compromisso de integridade que formaliza os parâmetros globais de qualidade essenciais para nascimento de um incremento."
+      },
+      {
+        id: 14,
+        q: "Qual evento encerra a Sprint?",
+        options: ["Sprint Review", "Daily Scrum", "Sprint Planning", "Sprint Retrospective"],
+        answer: 3,
+        explanation: "A Sprint Retrospective constitui o último dia/rito de uma Sprint ativa, direcionando o encerramento do container temporal."
+      },
+      {
+        id: 15,
+        q: "Quem pode participar do Sprint Planning?",
+        options: [
+          "Apenas os Developers que realizam o desenvolvimento técnico direto das atividades",
+          "Estritamente os membros principais oficiais com assento regular no Time Scrum",
+          "Todo o Time Scrum e possíveis especialistas convidados para fornecer conselhos táticos",
+          "Qualquer stakeholder ou usuário final que solicitar participação na reunião ágile"
+        ],
+        answer: 2,
+        explanation: "O Time Scrum realiza o planejamento estratégico de metas, estando livre para agregar convidados ou especialistas para assessoria."
+      },
+      {
+        id: 16,
+        q: "O que o Time Scrum inspeciona durante a Sprint Retrospective?",
+        options: [
+          "O estado atual do Product Backlog e as últimas estimativas passadas pelas partes interessadas",
+          "A última Sprint sob a ótica de pessoas, relacionamentos, processos, ferramentas e a Definition of Done",
+          "A velocidade histórica de entregas do time para recalcular a capacidade nas próximas rodadas",
+          "Os requisitos funcionais detalhados e técnicos planejados para as futuras entregas da empresa"
+        ],
+        answer: 1,
+        explanation: "Inspeciona as engrenagens de processo, interações humanas entre membros, usabilidade das ferramentas em views de melhorias."
+      },
+      {
+        id: 17,
+        q: "O que caracteriza em especial um Time Scrum auto-gerenciável?",
+        options: [
+          "A capacidade de rodar todo o framework ágil de trabalho sem a presença de um Scrum Master",
+          "A autonomia interna do próprio grupo para definir coletivamente quem faz o quê, quando e como no ciclo",
+          "A liberdade total do time técnico para ignorar as prioridades do Product Owner no projeto",
+          "A decisão do próprio time de adaptar as diretrizes do guia oficial às necessidades locais"
+        ],
+        answer: 1,
+        explanation: "Auto-gerenciável denota a capacidade do time decidir coletivamente o encargo das tarefas sem microgestão externa."
+      },
+      {
+        id: 18,
+        q: "Quantos Product Goals um Time Scrum pode perseguir simultaneamente?",
+        options: ["Dois ou mais conforme performance do time", "Não há limites descritos", "Apenas um por vez", "Exatamente um por Sprint"],
+        answer: 2,
+        explanation: "O Scrum Guide aponta foco unificado. Deve-se completar com sucesso ou abandonar o Product Goal ativo antes de dar início ao próximo."
+      },
+      {
+        id: 19,
+        q: "Qual é o compromisso associado ao Incremento?",
+        options: ["Sprint Goal", "Product Goal", "Sprint Backlog", "Definition of Done"],
+        answer: 3,
+        explanation: "A Definition of Done constitui a linha rígida de garantias técnicas que avalia se uma entrega alcançou as premissas de incremento utilizável."
+      },
+      {
+        id: 20,
+        q: "Qual é o propósito prioritário do refinamento do Product Backlog?",
+        options: [
+          "Substituir por completo a necessidade de reuniões formais para o planejamento de Sprints",
+          "Dividir e detalhar os itens do Product Backlog em partes menores, mais claras e fáceis de estimar",
+          "Remover as atividades antigas e alterar o escopo geral do projeto sem autorização prévia",
+          "Calcular e definir as estimativas de custos financeiros e alocação de equipe do trimestre"
+        ],
+        answer: 1,
+        explanation: "Trata-se de um ato dinâmico focado em fatiar e detalhar demandas amplas em frentes digeríveis com alta transparência tática."
+      }
+    ];
+
+    /* SYSTEM STATE CORE */
+    let shuffledQuestions = [];
+    let curIdx = 0;
+    let selectedOptIdx = null;
+    let correctAnswersCount = 0;
+    let answeredQuestionsHistory = []; // stores { question, selected, isCorrect }
+    let userAnswers = []; // stores selected option IDs per question index
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Set current year inside footer
+      document.getElementById("current-year").textContent = new Date().getFullYear();
+
+      // Setup Scroll Progress Indicator
+      window.addEventListener("scroll", handleScrollProgress);
+
+      // Setup Mobile Header Navigation Dialog Menu Toggle
+      const menuToggle = document.getElementById("menu-toggle");
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("sidebar-overlay");
+
+      if (menuToggle && sidebar && overlay) {
+        menuToggle.addEventListener("click", () => {
+          sidebar.classList.toggle("open");
+          overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", () => {
+          sidebar.classList.remove("open");
+          overlay.classList.remove("active");
+        });
+
+        // Close sidebar menu in small screens on scroll or clicks on navlinks
+        const navLinks = document.querySelectorAll(".nav-link");
+        navLinks.forEach(link => {
+          link.addEventListener("click", (e) => {
+            // Manage Active view transitions manually for single view layout
+            navLinks.forEach(nl => nl.classList.remove("active"));
+            link.classList.add("active");
+
+            sidebar.classList.remove("open");
+            overlay.classList.remove("active");
+          });
+        });
+      }
+
+      // Smooth Highlights Active Sidenav entries on scroll observer
+      setupIntersectionObserver();
+
+      // Show floating scroll to top
+      const backToTopBtn = document.getElementById("back-to-top");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 400) {
+          backToTopBtn.classList.add("show");
+        } else {
+          backToTopBtn.classList.remove("show");
+        }
+      });
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // Glossary search system engine
+      const searchBox = document.getElementById("glossary-search");
+      if (searchBox) {
+        searchBox.addEventListener("input", handleGlossarySearch);
+      }
+
+      // Action binding on Quiz Events
+      document.getElementById("btn-start-quiz").addEventListener("click", startQuizEvent);
+      document.getElementById("btn-confirm-answer").addEventListener("click", confirmQuizAnswerEvent);
+      document.getElementById("btn-prev-question").addEventListener("click", prevQuizQuestionEvent);
+      document.getElementById("btn-next-question").addEventListener("click", nextQuizQuestionEvent);
+      document.getElementById("btn-restart-quiz").addEventListener("click", startQuizEvent);
+      document.getElementById("btn-toggle-review").addEventListener("click", toggleIncorrectReviewsPanel);
+
+      // Handle Page Routing & Switching
+      window.addEventListener("hashchange", handleNavigation);
+      handleNavigation();
+    });
+
+    /* PAGE ROUTER FOR STUDY VS QUIZ */
+    function handleNavigation() {
+      const hash = window.location.hash || "#inicio";
+      const sLinks = document.querySelectorAll(".sidebar-nav .nav-link");
+      
+      if (hash === "#quiz") {
+        document.body.classList.add("mode-quiz");
+        window.scrollTo({ top: 0 });
+        
+        sLinks.forEach(lk => {
+          const hrefVal = lk.getAttribute("href");
+          if (hrefVal === "#quiz") {
+            lk.classList.add("active");
+          } else {
+            lk.classList.remove("active");
+          }
+        });
+        
+        // Hide reading progress bar
+        const barContainer = document.querySelector(".progress-bar-container");
+        if (barContainer) barContainer.style.display = "none";
+      } else {
+        document.body.classList.remove("mode-quiz");
+        
+        // Restore reading progress bar
+        const barContainer = document.querySelector(".progress-bar-container");
+        if (barContainer) barContainer.style.display = "block";
+        handleScrollProgress();
+        
+        sLinks.forEach(lk => {
+          const hrefVal = lk.getAttribute("href");
+          if (hrefVal === hash) {
+            lk.classList.add("active");
+          } else {
+            lk.classList.remove("active");
+          }
+        });
+        
+        const targetElement = document.querySelector(hash);
+        if (targetElement) {
+          setTimeout(() => {
+            targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 30);
+        }
+      }
+    }
+
+    /* SCROLL PROGRESS LOGIC */
+    function handleScrollProgress() {
+      if (document.body.classList.contains("mode-quiz")) return;
+      const scrollPos = window.scrollY || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      const progressPercent = height > 0 ? (scrollPos / height) * 100 : 0;
+      const bar = document.getElementById("progress-bar");
+      if (bar) bar.style.width = `${progressPercent}%`;
+    }
+
+    /* INTERSECTION OBSERVER HEIGHT NAVIGATION HIGHLIGHTS */
+    function setupIntersectionObserver() {
+      const sections = document.querySelectorAll("main.main-content section:not(#quiz)");
+      const sLinks = document.querySelectorAll(".sidebar-nav .nav-link");
+
+      const options = {
+        root: null,
+        rootMargin: "-45% 0px -45% 0px", // Trigger active state when section takes middle viewport
+        threshold: 0
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        if (document.body.classList.contains("mode-quiz")) return;
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const idVal = entry.target.getAttribute("id");
+            sLinks.forEach(lk => {
+              const hrefVal = lk.getAttribute("href").replace("#", "");
+              if (hrefVal === idVal) {
+                lk.classList.add("active");
+              } else {
+                lk.classList.remove("active");
+              }
+            });
+          }
+        });
+      }, options);
+
+      sections.forEach(sec => observer.observe(sec));
+    }
+
+    /* CARD ACCORDION TOGGLING FOR SECTION 4 & 6 */
+    function toggleValueCard(cardId) {
+      const targetCard = document.getElementById(cardId);
+      if (!targetCard) return;
+
+      // Close all other value cards
+      document.querySelectorAll(".value-card").forEach(c => {
+        if (c.id !== cardId) {
+          c.classList.remove("expanded");
+          const det = c.querySelector(".value-details");
+          if (det) det.style.maxHeight = null;
+        }
+      });
+
+      targetCard.classList.toggle("expanded");
+      const detVal = targetCard.querySelector(".value-details");
+      if (targetCard.classList.contains("expanded")) {
+        detVal.style.maxHeight = detVal.scrollHeight + "px";
+      } else {
+        detVal.style.maxHeight = null;
+      }
+    }
+
+    function toggleAccordion(itemId) {
+      const activeItem = document.getElementById(itemId);
+      if (!activeItem) return;
+
+      const flag = activeItem.classList.contains("active");
+
+      // Reset all accordions
+      document.querySelectorAll(".accordion-item").forEach(item => {
+        item.classList.remove("active");
+        const inside = item.querySelector(".accordion-content");
+        if (inside) inside.style.maxHeight = null;
+      });
+
+      if (!flag) {
+        activeItem.classList.add("active");
+        const cont = activeItem.querySelector(".accordion-content");
+        cont.style.maxHeight = cont.scrollHeight + "px";
+      }
+    }
+
+    /* GLOSSARY FILTER ENGINE (VANILLA JS SEARCH) */
+    function handleGlossarySearch(e) {
+      const q = e.target.value.toLowerCase().trim();
+      const tokens = q.split(/\s+/);
+      const cards = document.querySelectorAll("#glossary-grid .glossary-card");
+
+      cards.forEach(card => {
+        const titleText = card.querySelector(".glossary-term").textContent.toLowerCase();
+        const defText = card.querySelector(".glossary-def").textContent.toLowerCase();
+        const textPayload = `${titleText} ${defText}`;
+
+        const isMatch = tokens.every(tok => textPayload.includes(tok));
+        if (isMatch) {
+          card.classList.remove("hidden-glossary");
+        } else {
+          card.classList.add("hidden-glossary");
+        }
+      });
+    }
+
+    /* QUIZ STATE LOGICAL HANDLERS */
+    function shuffleArray(original) {
+      const cp = [...original];
+      for (let i = cp.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cp[i], cp[j]] = [cp[j], cp[i]];
+      }
+      return cp;
+    }
+
+    function startQuizEvent() {
+      // Scrape game state
+      shuffledQuestions = shuffleArray(quizQuestions);
+      curIdx = 0;
+      selectedOptIdx = null;
+      correctAnswersCount = 0;
+      answeredQuestionsHistory = [];
+      userAnswers = new Array(shuffledQuestions.length).fill(null);
+
+      // Render Active View Frame
+      document.getElementById("quiz-welcome-screen").style.display = "none";
+      document.getElementById("quiz-results-screen").style.display = "none";
+      document.getElementById("quiz-active-screen").style.display = "block";
+
+      // Toggle Review closed by default
+      document.getElementById("review-section").style.display = "none";
+
+      renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+      // Restore selected state from userAnswers
+      selectedOptIdx = userAnswers[curIdx];
+      
+      const confirmBtn = document.getElementById("btn-confirm-answer");
+      if (confirmBtn) {
+        if (selectedOptIdx !== null) {
+          confirmBtn.disabled = false;
+          confirmBtn.classList.remove("btn-outline");
+          confirmBtn.classList.add("btn-primary");
+        } else {
+          confirmBtn.disabled = true;
+          confirmBtn.classList.remove("btn-primary");
+          confirmBtn.classList.add("btn-outline");
+        }
+        if (curIdx === shuffledQuestions.length - 1) {
+          confirmBtn.textContent = "Finalizar e Ver Resultados";
+        } else {
+          confirmBtn.textContent = "Confirmar e Avançar";
+        }
+        confirmBtn.style.display = "inline-flex";
+      }
+
+      document.getElementById("btn-next-question").style.display = "none";
+      document.getElementById("quiz-feedback-container").style.display = "none";
+
+      const curQuestObj = shuffledQuestions[curIdx];
+
+      // Update ProgressBar and Stats Layouts
+      document.getElementById("quiz-question-counter").textContent = `Questão ${curIdx + 1} de ${shuffledQuestions.length}`;
+      
+      // Compute current answered stats
+      let tempCorrect = 0;
+      let answeredCount = 0;
+      userAnswers.forEach((ans, idx) => {
+        if (ans !== null && ans !== undefined) {
+          answeredCount++;
+          if (ans === shuffledQuestions[idx].answer) {
+             tempCorrect++;
+          }
+        }
+      });
+      document.getElementById("quiz-accuracy-indicator").textContent = `Acertos: ${tempCorrect}/${answeredCount}`;
+      
+      const widthPercentage = ((curIdx) / shuffledQuestions.length) * 100;
+      document.getElementById("quiz-progress-inner").style.width = `${widthPercentage}%`;
+
+      // Draw Enunciado
+      document.getElementById("quiz-question").textContent = curQuestObj.q;
+
+      // Draw vertical clickable card choices options
+      const optContainer = document.getElementById("quiz-options-container");
+      optContainer.innerHTML = "";
+
+      curQuestObj.options.forEach((optText, oIdx) => {
+        const letter = String.fromCharCode(65 + oIdx); // A, B, C, D
+        
+        const optNode = document.createElement("div");
+        optNode.className = "quiz-opt";
+        if (oIdx === selectedOptIdx) {
+          optNode.className += " selected";
+        }
+        optNode.id = `q-opt-${oIdx}`;
+        optNode.setAttribute("onclick", `selectQuizOption(${oIdx})`);
+
+        optNode.innerHTML = `
+          <div class="quiz-opt-letter">${letter}</div>
+          <div style="font-size: 1rem; font-weight: 500;">${optText}</div>
+        `;
+
+        optContainer.appendChild(optNode);
+      });
+
+      // Handle displaying or hiding the Back button based on curIdx
+      const backBtn = document.getElementById("btn-prev-question");
+      if (backBtn) {
+        if (curIdx > 0) {
+          backBtn.style.display = "inline-flex";
+        } else {
+          backBtn.style.display = "none";
+        }
+      }
+    }
+
+    function selectQuizOption(choiceIdx) {
+      selectedOptIdx = choiceIdx;
+      userAnswers[curIdx] = choiceIdx; // save temporarily on select
+
+      // Unselect all option cards
+      document.querySelectorAll(".quiz-opt").forEach(card => card.classList.remove("selected"));
+      
+      // Select selected card
+      const targetCard = document.getElementById(`q-opt-${choiceIdx}`);
+      if (targetCard) targetCard.classList.add("selected");
+
+      // Activate and style confirmation button
+      const confirmBtn = document.getElementById("btn-confirm-answer");
+      if (confirmBtn) {
+        confirmBtn.disabled = false;
+        confirmBtn.classList.remove("btn-outline");
+        confirmBtn.classList.add("btn-primary");
+      }
+    }
+
+    function prevQuizQuestionEvent() {
+      if (curIdx > 0) {
+        if (selectedOptIdx !== null) {
+          userAnswers[curIdx] = selectedOptIdx;
+        }
+        curIdx--;
+        renderQuizQuestion();
+      }
+    }
+
+    function confirmQuizAnswerEvent() {
+      if (selectedOptIdx === null) return;
+
+      userAnswers[curIdx] = selectedOptIdx;
+
+      // Seamless transition to next question or final outcomes screen
+      if (curIdx < shuffledQuestions.length - 1) {
+        curIdx++;
+        renderQuizQuestion();
+      } else {
+        calculateQuizFinalResults();
+        renderQuizResults();
+      }
+    }
+
+    function calculateQuizFinalResults() {
+      correctAnswersCount = 0;
+      answeredQuestionsHistory = [];
+
+      shuffledQuestions.forEach((questObj, idx) => {
+        const chosenIdx = userAnswers[idx];
+        const isCorrect = (chosenIdx === questObj.answer);
+        if (isCorrect) {
+          correctAnswersCount++;
+        }
+        answeredQuestionsHistory.push({
+          questObj: questObj,
+          chosenIdx: chosenIdx,
+          isCorrect: isCorrect
+        });
+      });
+    }
+
+    function nextQuizQuestionEvent() {
+      if (curIdx < shuffledQuestions.length - 1) {
+        curIdx++;
+        renderQuizQuestion();
+      } else {
+        calculateQuizFinalResults();
+        renderQuizResults();
+      }
+    }
+
+    function renderQuizResults() {
+      document.getElementById("quiz-active-screen").style.display = "none";
+      document.getElementById("quiz-results-screen").style.display = "block";
+
+      const totalPct = Math.round((correctAnswersCount / shuffledQuestions.length) * 100);
+
+      // Render graphics
+      document.getElementById("results-score-percent").textContent = `${totalPct}%`;
+      document.getElementById("results-score-fraction").textContent = `${correctAnswersCount} / ${shuffledQuestions.length}`;
+
+      const levelTitle = document.getElementById("results-level-title");
+      const levelDesc = document.getElementById("results-level-desc");
+
+      // Categorizations matching required thresholds
+      if (totalPct >= 85) {
+        levelTitle.textContent = "Nível Avançado 🏆";
+        levelTitle.style.color = "var(--accent-secondary)";
+        levelDesc.textContent = "Excelente resultado! Você demonstrou forte domínio do Scrum de ponta a ponta, compreendendo com precisão os papéis, eventos e artefatos oficiais. Suas bases estão prontas para apoiar o fluxo de qualquer projeto.";
+      } else if (totalPct >= 70) {
+        levelTitle.textContent = "Bom Aproveitamento 🌟";
+        levelTitle.style.color = "var(--accent-primary)";
+        levelDesc.textContent = "Ótimo desempenho! Você tem uma visão clara sobre inspeção, adaptação e fluxos de entrega no Scrum. Com mais algumas leituras pontuais nas seções, você alcança o nível avançado.";
+      } else if (totalPct >= 50) {
+        levelTitle.textContent = "Em Desenvolvimento ⚡";
+        levelTitle.style.color = "var(--accent-tertiary)";
+        levelDesc.textContent = "Você já entende a dinâmica básica de uma Sprint, mas vale a pena dar mais uma conferida nas abas do nosso guia para consolidar os conceitos dos papéis e eventos no dia a dia.";
+      } else {
+        levelTitle.textContent = "Nível Iniciante 📚";
+        levelTitle.style.color = "var(--text-secondary)";
+        levelDesc.textContent = "O fluxo do Scrum possui algumas regras e especificidades importantes. Faça uma nova leitura dos nossos módulos teóricos de estudo e depois tente o simulado mais uma vez para testar seus novos conhecimentos!";
+      }
+
+      // Pre-evaluate wrong questions reviews data structures
+      buildWrongQuizReviewsCardPanel();
+
+      // Dynamic achievement badge unlocks
+      const cardIniciado = document.getElementById("achievement-iniciado");
+      const cardGuardiao = document.getElementById("achievement-guardiao");
+      const cardMentor = document.getElementById("achievement-mentor");
+      const cardEvangelista = document.getElementById("achievement-evangelista");
+
+      const tagIniciado = document.getElementById("achievement-tag-iniciado");
+      const tagGuardiao = document.getElementById("achievement-tag-guardiao");
+      const tagMentor = document.getElementById("achievement-tag-mentor");
+      const tagEvangelista = document.getElementById("achievement-tag-evangelista");
+
+      if (cardIniciado && cardGuardiao && cardMentor && cardEvangelista) {
+        // Reset states
+        cardIniciado.className = "achievement-card locked";
+        cardGuardiao.className = "achievement-card locked";
+        cardMentor.className = "achievement-card locked";
+        cardEvangelista.className = "achievement-card locked";
+
+        tagIniciado.textContent = "Bloqueado 🔒";
+        tagGuardiao.textContent = "Bloqueado 🔒";
+        tagMentor.textContent = "Bloqueado 🔒";
+        tagEvangelista.textContent = "Bloqueado 🔒";
+
+        // Always unlock Iniciado on completion of quiz
+        cardIniciado.className = "achievement-card unlocked";
+        tagIniciado.textContent = "Membro Integrado ✓";
+
+        if (totalPct >= 50) {
+          cardGuardiao.className = "achievement-card unlocked";
+          tagGuardiao.textContent = "Desbloqueado ✓";
+        }
+        if (totalPct >= 70) {
+          cardMentor.className = "achievement-card unlocked";
+          tagMentor.textContent = "Desbloqueado ✓";
+        }
+        if (totalPct >= 85) {
+          cardEvangelista.className = "achievement-card unlocked elite";
+          tagEvangelista.textContent = "Mestre Elite ✓";
+        }
+      }
+    }
+
+    function buildWrongQuizReviewsCardPanel() {
+      const reviewBox = document.getElementById("review-list-container");
+      reviewBox.innerHTML = "";
+
+      if (answeredQuestionsHistory.length === 0) {
+        return;
+      }
+
+      answeredQuestionsHistory.forEach((item, numId) => {
+        const itemNode = document.createElement("div");
+        itemNode.className = "review-item";
+        itemNode.style.border = "1px solid var(--border-color)";
+        itemNode.style.padding = "24px";
+        itemNode.style.borderRadius = "1.2rem";
+        itemNode.style.marginBottom = "16px";
+        
+        if (item.isCorrect) {
+          itemNode.style.borderColor = "rgba(16, 185, 129, 0.3)";
+          itemNode.style.backgroundColor = "rgba(16, 185, 129, 0.02)";
+        } else {
+          itemNode.style.borderColor = "rgba(245, 158, 11, 0.3)";
+          itemNode.style.backgroundColor = "rgba(245, 158, 11, 0.02)";
+        }
+
+        const selLetter = String.fromCharCode(65 + item.chosenIdx);
+        const corLetter = String.fromCharCode(65 + item.questObj.answer);
+        const selText = item.questObj.options[item.chosenIdx];
+        const corText = item.questObj.options[item.questObj.answer];
+
+        const badgeHtml = item.isCorrect 
+          ? `<span class="badge badge-green" style="margin-bottom: 12px; font-size: 0.75rem;">Correta ✓</span>` 
+          : `<span class="badge badge-coral" style="margin-bottom: 12px; font-size: 0.75rem;">Incorreta ✗</span>`;
+
+        const ansHtml = item.isCorrect
+          ? `<span class="review-correct-ans" style="color: var(--accent-secondary); font-weight: 600;">Sua escolha: (${selLetter}) ${selText} ✓</span>`
+          : `
+            <span class="review-selected-ans" style="color: var(--accent-tertiary); font-weight: 600; margin-bottom: 4px; display: block;">Sua escolha: (${selLetter}) ${selText} ✗</span>
+            <span class="review-correct-ans" style="color: var(--accent-secondary); font-weight: 600;">Gabarito Oficial: (${corLetter}) ${corText} ✓</span>
+          `;
+
+        itemNode.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div class="review-q" style="margin-bottom: 8px; flex: 1; font-family: var(--font-display); font-size: 1.1rem; color: var(--text-light); font-weight: 600;">${numId + 1}. ${item.questObj.q}</div>
+            ${badgeHtml}
+          </div>
+          <div class="review-ans-grid" style="margin-top: 8px; font-family: var(--font-sans); font-size: 0.95rem;">
+            ${ansHtml}
+          </div>
+          <div class="review-expl" style="margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border-color); font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; border-left: none; padding-left: 0;">
+            <strong>Justificativa Base Scrum 2020:</strong> ${item.questObj.explanation}
+          </div>
+        `;
+
+        reviewBox.appendChild(itemNode);
+      });
+    }
+
+    function toggleIncorrectReviewsPanel() {
+      const revSec = document.getElementById("review-section");
+      const revBtn = document.getElementById("btn-toggle-review");
+      
+      if (revSec.style.display === "block") {
+        revSec.style.display = "none";
+        revBtn.textContent = "Revisar Erros";
+      } else {
+        revSec.style.display = "block";
+        revBtn.textContent = "Ocultar Revisão";
+        revSec.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  </script>
+</body>
+</html>

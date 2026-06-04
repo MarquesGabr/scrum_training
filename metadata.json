@@ -1,0 +1,6 @@
+{
+  "name": "Treinamento Scrum Code[]",
+  "description": "Uma plataforma de treinamento interativa e completa sobre o Scrum Framework baseada no Scrum Guide 2020 para a empresa Code[]",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
